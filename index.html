@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <title>Our Family Trips | 家族旅遊紀錄</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="紀錄我們家每一次旅行的足跡與回憶。" />
+
+  <!-- Google Font，可以之後再換 -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #1f9bb3;   /* 主色：藍綠 */
+      --primary-dark: #16768a;
+      --accent: #ff914d;    /* 副色：橘 */
+      --bg: #f5f7fb;
+      --text: #20252b;
+      --muted: #6f7785;
+      --card-bg: #ffffff;
+      --radius-lg: 20px;
+      --shadow-soft: 0 18px 40px rgba(15, 23, 42, 0.08);
+      --transition-fast: 0.25s ease;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Noto Sans TC", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* ===== Layout ===== */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(16px);
+      background: linear-gradient(to bottom, rgba(245, 247, 251, 0.95), rgba(245, 247, 251, 0.85));
+      border-bottom: 1px solid rgba(148, 163, 184, 0.3);
+    }
+
+    .nav {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.65rem 1.25rem;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+
+    .logo-mark {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 20%, #fff7e6, #ff914d);
+      box-shadow: 0 10px 25px rgba(248, 162, 69, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      color: #fff;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: 0.9rem;
+    }
+
+    .nav-links a {
+      padding: 0.3rem 0.75rem;
+      border-radius: 999px;
+      color: var(--muted);
+      transition: background var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
+    }
+
+    .nav-links a:hover {
+      background: rgba(31, 155, 179, 0.08);
+      color: var(--primary-dark);
+      transform: translateY(-1px);
+    }
+
+    .nav-cta {
+      background: var(--primary);
+      color: #fff !important;
+      padding: 0.4rem 0.9rem !important;
+      border-radius: 999px;
+      box-shadow: 0 8px 20px rgba(31, 155, 179, 0.35);
+      font-size: 0.8rem;
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 1.5rem 1.25rem 3rem;
+    }
+
+    section {
+      margin-top: 3rem;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+      gap: 0.75rem;
+    }
+
+    .section-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .section-title span.tag {
+      font-size: 0.75rem;
+      padding: 0.15rem 0.6rem;
+      border-radius: 999px;
+      background: rgba(31, 155, 179, 0.08);
+      color: var(--primary-dark);
+    }
+
+    .section-subtitle {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    /* ===== Hero ===== */
+    .hero {
+      margin-top: 1.5rem;
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.2fr);
+      gap: 1.8rem;
+      align-items: center;
+    }
+
+    .hero-main {
+      padding: 1.8rem 1.8rem 1.6rem;
+      background: radial-gradient(circle at 0% 0%, #e0f7ff, #f5f7fb);
+      border-radius: 26px;
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.3rem 0.7rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      font-size: 0.75rem;
+      color: #64748b;
+      margin-bottom: 1rem;
+    }
+
+    .hero-badge-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 0 6px rgba(34, 197, 94, 0.25);
+    }
+
+    .hero-title {
+      font-size: clamp(1.9rem, 2.3vw + 1.3rem, 2.4rem);
+      margin-bottom: 0.7rem;
+    }
+
+    .hero-title strong {
+      color: var(--primary-dark);
+    }
+
+    .hero-text {
+      font-size: 0.95rem;
+      color: var(--muted);
+      max-width: 32rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1.4rem;
+      align-items: center;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      padding: 0.55rem 1.1rem;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast), color var(--transition-fast);
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: #fff;
+      box-shadow: 0 14px 32px rgba(31, 155, 179, 0.5);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 18px 40px rgba(31, 155, 179, 0.65);
+    }
+
+    .btn-ghost {
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      color: var(--muted);
+    }
+
+    .btn-ghost:hover {
+      background: #ffffff;
+      color: var(--primary-dark);
+      transform: translateY(-1px);
+      box-shadow: 0 10px 24px rgba(148, 163, 184, 0.35);
+    }
+
+    .hero-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.2rem;
+      margin-top: 1.6rem;
+      font-size: 0.8rem;
+      color: #64748b;
+    }
+
+    .hero-stat-item strong {
+      display: block;
+      font-size: 1.1rem;
+      color: var(--primary-dark);
+    }
+
+    .hero-visual {
+      position: relative;
+      height: 100%;
+    }
+
+    .hero-card-main {
+      background: var(--card-bg);
+      border-radius: 24px;
+      padding: 1.1rem 1.1rem 1rem;
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+
+    .pill {
+      font-size: 0.7rem;
+      padding: 0.2rem 0.7rem;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.05);
+      color: #475569;
+    }
+
+    .badge-soft {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      background: rgba(34, 197, 94, 0.08);
+      color: #15803d;
+      font-size: 0.7rem;
+    }
+
+    .hero-trip {
+      font-size: 0.9rem;
+    }
+
+    .hero-trip h3 {
+      font-size: 1rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .hero-trip-meta {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .hero-timeline {
+      margin-top: 0.6rem;
+      padding-top: 0.6rem;
+      border-top: 1px dashed rgba(148, 163, 184, 0.5);
+      display: flex;
+      gap: 0.8rem;
+      font-size: 0.75rem;
+    }
+
+    .hero-timeline-item {
+      flex: 1;
+    }
+
+    .hero-float-card {
+      position: absolute;
+      right: -14px;
+      bottom: -18px;
+      width: 180px;
+      background: linear-gradient(135deg, #ffecd2, #fcb69f);
+      border-radius: 20px;
+      padding: 0.75rem;
+      box-shadow: 0 16px 36px rgba(248, 181, 129, 0.7);
+      font-size: 0.8rem;
+      color: #4b5563;
+    }
+
+    .hero-float-card strong {
+      display: block;
+      font-size: 0.95rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .hero-float-card small {
+      font-size: 0.72rem;
+      opacity: 0.85;
+    }
+
+    /* ===== Cards & grids ===== */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.1rem;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-soft);
+      padding: 1rem;
+      position: relative;
+      overflow: hidden;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), translate var(--transition-fast);
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 45px rgba(15, 23, 42, 0.14);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+      gap: 0.4rem;
+    }
+
+    .card-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .card-sub {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.15rem 0.55rem;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      background: rgba(31, 155, 179, 0.08);
+      color: var(--primary-dark);
+    }
+
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-top: 0.45rem;
+    }
+
+    .tag {
+      font-size: 0.72rem;
+      padding: 0.1rem 0.45rem;
+      border-radius: 999px;
+      background: rgba(148, 163, 184, 0.12);
+      color: #64748b;
+    }
+
+    .card-footer {
+      margin-top: 0.7rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .pill-link {
+      font-size: 0.75rem;
+      padding: 0.2rem 0.65rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      cursor: pointer;
+    }
+
+    /* ===== Trip Log ===== */
+    .trip-log-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .trip-card {
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-soft);
+      padding: 0.9rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .trip-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(31, 155, 179, 0.06), transparent);
+      opacity: 0;
+      transition: opacity var(--transition-fast);
+      pointer-events: none;
+    }
+
+    .trip-card:hover::before {
+      opacity: 1;
+    }
+
+    .trip-location {
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .trip-meta {
+      font-size: 0.8rem;
+      color: var(--muted);
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .trip-desc {
+      font-size: 0.85rem;
+      color: #4b5563;
+    }
+
+    /* ===== Gallery ===== */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: 2fr 1.5fr 1.5fr;
+      grid-template-rows: repeat(2, 120px);
+      gap: 0.6rem;
+    }
+
+    .gallery-item {
+      border-radius: 18px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: var(--shadow-soft);
+      background-size: cover;
+      background-position: center;
+    }
+
+    .gallery-item.large {
+      grid-row: 1 / span 2;
+    }
+
+    .gallery-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(15, 23, 42, 0.7), transparent);
+      display: flex;
+      align-items: flex-end;
+      padding: 0.7rem;
+      font-size: 0.8rem;
+      color: #e5e7eb;
+    }
+
+    /* ===== Family ===== */
+    .family-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.8rem;
+    }
+
+    .family-card {
+      background: var(--card-bg);
+      border-radius: 18px;
+      box-shadow: var(--shadow-soft);
+      padding: 0.75rem;
+      text-align: center;
+      font-size: 0.82rem;
+    }
+
+    .avatar {
+      width: 52px;
+      height: 52px;
+      border-radius: 999px;
+      margin: 0 auto 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at 20% 20%, #fef3c7, #fb923c);
+      color: #fff;
+      font-weight: 600;
+      font-size: 1.1rem;
+      box-shadow: 0 10px 22px rgba(248, 181, 129, 0.6);
+    }
+
+    footer {
+      border-top: 1px solid rgba(148, 163, 184, 0.35);
+      margin-top: 3rem;
+      padding-top: 1rem;
+      padding-bottom: 1.5rem;
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .hero-visual {
+        order: -1;
+      }
+
+      .cards-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .trip-log-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .gallery-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-rows: repeat(3, 120px);
+      }
+
+      .gallery-item.large {
+        grid-row: span 2;
+      }
+
+      .family-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      .nav-links {
+        display: none;
+      }
+
+      main {
+        padding-inline: 1rem;
+      }
+
+      .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .cards-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .gallery-grid {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-rows: repeat(4, 140px);
+      }
+
+      .family-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .hero-main {
+        padding: 1.4rem 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- 導覽列 -->
+  <header>
+    <div class="nav">
+      <div class="logo">
+        <div class="logo-mark">旅</div>
+        <div>
+          <div style="font-size:0.9rem;">Our Family Trips</div>
+          <div style="font-size:0.7rem; color:var(--muted);">一起走過的每一段風景</div>
+        </div>
+      </div>
+      <nav class="nav-links">
+        <a href="#upcoming">即將出發</a>
+        <a href="#log">旅遊紀錄</a>
+        <a href="#gallery">照片牆</a>
+        <a href="#family">家族成員</a>
+        <a href="#log" class="nav-cta">查看足跡</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero 區塊 -->
+    <section class="hero">
+      <div class="hero-main">
+        <div class="hero-badge">
+          <span class="hero-badge-dot"></span>
+          正在計畫下一趟家族旅行中…
+        </div>
+        <h1 class="hero-title">
+          紀錄 <strong>我們家</strong> 的每一次旅程
+        </h1>
+        <p class="hero-text">
+          這裡是我們家的旅遊中樞：出發前的行程、旅途中當下的心情、回來後的每一張照片與文字，都會被好好放進來，變成專屬於我們的旅行故事。
+        </p>
+        <div class="hero-actions">
+          <button class="btn btn-primary" onclick="scrollToSection('log')">
+            查看旅遊足跡
+          </button>
+          <button class="btn btn-ghost" onclick="scrollToSection('upcoming')">
+            看下一趟要去哪裡
+          </button>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat-item">
+            <strong id="statTrips">8</strong>
+            旅程 Trip
+          </div>
+          <div class="hero-stat-item">
+            <strong id="statCities">12</strong>
+            城市 Cities
+          </div>
+          <div class="hero-stat-item">
+            <strong id="statYears">4+</strong>
+            年度回憶 Years
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="hero-card-main">
+          <div class="hero-card-header">
+            <span class="pill">家族旅遊計畫</span>
+            <span class="badge-soft">
+              ● 進行中
+            </span>
+          </div>
+          <div class="hero-trip">
+            <h3 id="heroTripName">沖繩海島慢旅</h3>
+            <div class="hero-trip-meta" id="heroTripMeta">
+              2025/03/28 – 03/31 · 全家一起 · 海邊 / 美食 / 租車自駕
+            </div>
+          </div>
+          <div class="hero-timeline">
+            <div class="hero-timeline-item">
+              <div style="font-size:0.75rem; color:var(--muted);">下一個目的地</div>
+              <div style="font-size:0.9rem; font-weight:500;" id="heroTripLocation">日本 · 沖繩</div>
+            </div>
+            <div class="hero-timeline-item">
+              <div style="font-size:0.75rem; color:var(--muted);">目前狀態</div>
+              <div style="font-size:0.85rem;">機票已訂 · 找住宿中</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-float-card">
+          <strong>下一張回憶相片</strong>
+          <small>每一次按下快門，都會被放進這裡，變成「我們家」專屬的旅遊相簿。</small>
+        </div>
+      </div>
+    </section>
+
+    <!-- Upcoming Trips -->
+    <section id="upcoming">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">
+            即將出發的旅程 <span class="tag">Upcoming Trips</span>
+          </h2>
+          <p class="section-subtitle">
+            把所有已經「決定要出發」或「還在討論中」的旅程放在這裡，讓全家都能一眼看懂接下來要去哪。
+          </p>
+        </div>
+      </div>
+
+      <div class="cards-grid" id="upcomingContainer">
+        <!-- 內容由 JavaScript 塞入 -->
+      </div>
+    </section>
+
+    <!-- Trip Log -->
+    <section id="log">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">
+            我們的旅遊足跡 <span class="tag">Trip Log</span>
+          </h2>
+          <p class="section-subtitle">
+            每一趟旅行去哪裡、跟誰一起、什麼時候去、印象最深的是什麼，都在這裡慢慢累積。
+          </p>
+        </div>
+        <div style="font-size:0.8rem; color:var(--muted);">
+          小提示：未來你只要修改「旅遊資料陣列」，這裡的卡片就會跟著更新。
+        </div>
+      </div>
+
+      <div class="trip-log-grid" id="tripLogContainer">
+        <!-- 內容由 JavaScript 塞入 -->
+      </div>
+    </section>
+
+    <!-- Gallery -->
+    <section id="gallery">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">
+            回憶照片牆 <span class="tag">Gallery</span>
+          </h2>
+          <p class="section-subtitle">
+            之後可以替換成真實照片，或嵌入 Google 相簿。這裡先用示意圖幫你排版好格子。
+          </p>
+        </div>
+      </div>
+
+      <div class="gallery-grid">
+        <div class="gallery-item large" style="background-image:url('https://images.pexels.com/photos/457882/pexels-photo-457882.jpeg?auto=compress&cs=tinysrgb&w=1200');">
+          <div class="gallery-overlay">
+            家族第一次出國 · 一起在海邊看日落
+          </div>
+        </div>
+        <div class="gallery-item" style="background-image:url('https://images.pexels.com/photos/1008155/pexels-photo-1008155.jpeg?auto=compress&cs=tinysrgb&w=1200');">
+          <div class="gallery-overlay">
+            城市散步 · 迷路的午後
+          </div>
+        </div>
+        <div class="gallery-item" style="background-image:url('https://images.pexels.com/photos/346885/pexels-photo-346885.jpeg?auto=compress&cs=tinysrgb&w=1200');">
+          <div class="gallery-overlay">
+            山裡的空氣 · 清晨的霧
+          </div>
+        </div>
+        <div class="gallery-item" style="background-image:url('https://images.pexels.com/photos/21014/pexels-photo.jpg?auto=compress&cs=tinysrgb&w=1200');">
+          <div class="gallery-overlay">
+            公路旅行 · 車上的音樂
+          </div>
+        </div>
+        <div class="gallery-item" style="background-image:url('https://images.pexels.com/photos/2087391/pexels-photo-2087391.jpeg?auto=compress&cs=tinysrgb&w=1200');">
+          <div class="gallery-overlay">
+            夜市 · 美食 · 大笑
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Family -->
+    <section id="family">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">
+            我們家的成員 <span class="tag">Family</span>
+          </h2>
+          <p class="section-subtitle">
+            這些名字，是出現在每一張照片、每一段旅程中的主角。
+          </p>
+        </div>
+      </div>
+
+      <div class="family-grid">
+        <div class="family-card">
+          <div class="avatar">爸</div>
+          <div style="font-weight:600;">爸爸</div>
+          <div style="font-size:0.78rem; color:var(--muted); margin-top:0.25rem;">
+            最愛自駕旅行與找當地隱藏美食，永遠負責開車的人。
+          </div>
+        </div>
+        <div class="family-card">
+          <div class="avatar">媽</div>
+          <div style="font-weight:600;">媽媽</div>
+          <div style="font-size:0.78rem; color:var(--muted); margin-top:0.25rem;">
+            行程規劃大總管，出發前的清單永遠最完整的一位。
+          </div>
+        </div>
+        <div class="family-card">
+          <div class="avatar">K</div>
+          <div style="font-weight:600;">Kent</div>
+          <div style="font-size:0.78rem; color:var(--muted); margin-top:0.25rem;">
+            網頁管理員兼攝影師，負責把旅程變成可以重播的記憶。
+          </div>
+        </div>
+        <div class="family-card">
+          <div class="avatar">弟</div>
+          <div style="font-weight:600;">弟弟 / 其他家人</div>
+          <div style="font-size:0.78rem; color:var(--muted); margin-top:0.25rem;">
+            旅途中永遠帶來笑點與驚喜的人，負責把氣氛炒熱。
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      © <span id="year"></span> Our Family Trips · 只為我們家保留的旅行回憶
+    </footer>
+  </main>
+
+  <script>
+    // ===== 這裡是「旅遊資料」：你未來主要會修改的地方 =====
+    // 即將出發的旅程
+    const upcomingTrips = [
+      {
+        name: "沖繩海島慢旅",
+        location: "日本 · 沖繩",
+        date: "2025/03/28 – 03/31",
+        members: "全家",
+        highlights: ["海邊散步", "自駕兜風", "在地拉麵"],
+        status: "機票已訂 · 找住宿中",
+        link: "#"
+      },
+      {
+        name: "京都賞楓小旅行",
+        location: "日本 · 京都",
+        date: "2025/11（規劃中）",
+        members: "爸爸 · 媽媽 · Kent",
+        highlights: ["清水寺", "嵐山", "和服體驗"],
+        status: "討論行程",
+        link: "#"
+      },
+      {
+        name: "花蓮三天兩夜",
+        location: "台灣 · 花蓮",
+        date: "暫定 2026 上半年",
+        members: "全家",
+        highlights: ["海岸公路", "太魯閣", "夜市美食"],
+        status: "想去，但尚未排假",
+        link: "#"
+      }
+    ];
+
+    // 過去旅程紀錄
+    const tripLog = [
+      {
+        name: "台南美食週末小旅行",
+        location: "台灣 · 台南",
+        date: "2024/10/19 – 10/20",
+        members: "全家",
+        tags: ["美食", "古城", "散步"],
+        description: "第一天完全被牛肉湯和小卷米粉收買，晚上在古蹟附近亂逛，走到腳痠也覺得值得。",
+      },
+      {
+        name: "清境農場兩天一夜",
+        location: "台灣 · 南投",
+        date: "2024/04/06 – 04/07",
+        members: "爸 · 媽 · Kent",
+        tags: ["山景", "放空", "星空"],
+        description: "早晚都很冷，但羊咩咩超可愛。晚上在民宿陽台看星星，聊天聊到很晚。",
+      },
+      {
+        name: "台東海岸公路自駕",
+        location: "台灣 · 台東",
+        date: "2023/08/10 – 08/13",
+        members: "全家",
+        tags: ["自駕", "海邊", "親子"],
+        description: "沿著海岸線開車，看到漂亮就停下來拍照，節奏完全照自己的步調走。",
+      },
+      {
+        name: "宜蘭溫泉放鬆之旅",
+        location: "台灣 · 宜蘭",
+        date: "2022/12/24 – 12/25",
+        members: "爸 · 媽",
+        tags: ["溫泉", "聖誕節", "放鬆"],
+        description: "沒有排太多行程，只是泡湯、吃東西、散步，單純享受放鬆的感覺。",
+      }
+    ];
+
+    // ===== 以下是把資料渲染到畫面上 =====
+    const upcomingContainer = document.getElementById("upcomingContainer");
+    const tripLogContainer = document.getElementById("tripLogContainer");
+
+    function renderUpcoming() {
+      upcomingContainer.innerHTML = "";
+      upcomingTrips.forEach(trip => {
+        const card = document.createElement("article");
+        card.className = "card";
+        card.innerHTML = `
+          <div class="card-header">
+            <div>
+              <div class="card-title">${trip.name}</div>
+              <div class="card-sub">${trip.location}</div>
+            </div>
+            <span class="chip">${trip.date}</span>
+          </div>
+          <div style="font-size:0.8rem; color:var(--muted); margin-top:0.25rem;">
+            成員：${trip.members}
+          </div>
+          <div class="tag-list">
+            ${trip.highlights.map(h => `<span class="tag">${h}</span>`).join("")}
+          </div>
+          <div class="card-footer">
+            <span>${trip.status}</span>
+            <span class="pill-link">
+              查看詳情
+            </span>
+          </div>
+        `;
+        upcomingContainer.appendChild(card);
+      });
+
+      // 更新 Hero 顯示的下一趟旅程（取第一筆）
+      if (upcomingTrips.length > 0) {
+        const nextTrip = upcomingTrips[0];
+        document.getElementById("heroTripName").textContent = nextTrip.name;
+        document.getElementById("heroTripLocation").textContent = nextTrip.location;
+        document.getElementById("heroTripMeta").textContent =
+          `${nextTrip.date} · ${nextTrip.members} · ${nextTrip.highlights.join(" / ")}`;
+      }
+    }
+
+    function renderTripLog() {
+      tripLogContainer.innerHTML = "";
+      tripLog.forEach(trip => {
+        const card = document.createElement("article");
+        card.className = "trip-card";
+        card.innerHTML = `
+          <div class="trip-location">${trip.name}</div>
+          <div class="trip-meta">
+            <span>${trip.location}</span>
+            <span>·</span>
+            <span>${trip.date}</span>
+            <span>·</span>
+            <span>${trip.members}</span>
+          </div>
+          <p class="trip-desc">${trip.description}</p>
+          <div class="tag-list">
+            ${trip.tags.map(t => `<span class="tag">${t}</span>`).join("")}
+          </div>
+        `;
+        tripLogContainer.appendChild(card);
+      });
+
+      // 更新上方統計數字（簡單估算）
+      document.getElementById("statTrips").textContent = tripLog.length + upcomingTrips.length;
+      // 簡單計算不同城市數量
+      const cities = new Set(tripLog.map(t => t.location).concat(upcomingTrips.map(t => t.location)));
+      document.getElementById("statCities").textContent = cities.size;
+    }
+
+    function scrollToSection(id) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      window.scrollTo({
+        top: el.offsetTop - 70,
+        behavior: "smooth"
+      });
+    }
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    renderUpcoming();
+    renderTripLog();
+  </script>
+</body>
+</html>
