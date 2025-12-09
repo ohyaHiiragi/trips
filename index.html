@@ -1,11 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <title> Our Trips | 旅遊紀錄 </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="每一次的旅行總會有不一樣的點滴" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ===== 基本樣式（保持你原本的風格） ===== */
+    :root {
+      --primary: #1f9bb3;
+      --primary-dark: #16768a;
+      --accent: #ff914d;
+      --bg: #f5f7fb;
+      --text: #20252b;
+      --muted: #6f7785;
+      --card-bg: #ffffff;
+      --radius-lg: 20px;
+      --shadow-soft: 0 18px 40px rgba(15, 23, 42, 0.08);
+      --transition-fast: 0.25s ease;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Noto Sans TC", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* ===== Header ===== */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(16px);
+      background: rgba(245, 247, 251, 0.92);
+      border-bottom: 1px solid rgba(148, 163, 184, 0.3);
+    }
+
+    .nav {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0.7rem 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 700;
+    }
+
+    .logo-mark {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 20%, #fff7e6, #ff914d);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 1.5rem 1.25rem 3rem;
+    }
+
+    /* ===== Hero 區塊 ===== */
+    .hero {
+      margin-top: 1.5rem;
+      display: grid;
+      grid-template-columns: 1.4fr 1.2fr;
+      gap: 1.8rem;
+      align-items: center;
+    }
+
+    .hero-main {
+      padding: 2rem;
+      background: radial-gradient(circle at 0% 0%, #e0f7ff, #f5f7fb);
+      border-radius: 26px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .hero-title { font-size: 2rem; margin-bottom: 0.7rem; }
+    .hero-title strong { color: var(--primary-dark); }
+
+    .hero-text { font-size: 0.95rem; color: var(--muted); }
+
+    .hero-card {
+      background: var(--card-bg);
+      padding: 1.2rem;
+      border-radius: 20px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .pill {
+      display: inline-block;
+      background: rgba(31,155,179,0.15);
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      color: var(--primary-dark);
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 0.1rem 0.45rem;
+      background: rgba(148,163,184,0.15);
+      border-radius: 999px;
+      font-size: 0.75rem;
+      margin-right: 4px;
+      margin-top: 4px;
+    }
+
+    /* ===== Cards ===== */
+    .cards-grid {
+      margin-top: 1rem;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+
+    .card {
+      background: var(--card-bg);
+      padding: 1rem;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-soft);
+    }
+
+    /* ===== Footer ===== */
+    footer {
+      text-align: center;
+      padding: 2rem 0 1rem;
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+
+    @media(max-width:900px) {
+      .hero { grid-template-columns: 1fr; }
+      .cards-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="nav">
+      <div class="logo">
+        <div class="logo-mark">旅</div>
+        <div>Our Family Trips</div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ===== Hero ===== -->
+    <section class="hero">
+      <div class="hero-main">
+        <h1 class="hero-title">紀錄 <strong>我們家</strong> 的每一次旅程</h1>
+        <p class="hero-text">
+          這裡是我們家的旅遊中樞：出發前的行程、旅途中當下的心情、回來後的每一張照片與文字，都會被好好放進來。
+        </p>
+      </div>
+
+      <div class="hero-card">
+        <span class="pill">家族旅遊計畫</span>
+        <h3 id="heroTripName" style="margin-top:0.5rem;">載入中...</h3>
+        <div id="heroTripMeta" style="font-size:0.9rem; color:var(--muted); margin-top:0.3rem;">
+          請稍候…
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Upcoming Trips ===== -->
+    <section style="margin-top:2.5rem;">
+      <h2 style="font-size:1.4rem; font-weight:700;">即將出發的旅程</h2>
+
+      <div class="cards-grid" id="upcomingContainer"></div>
+    </section>
+
+    <footer>
+      © <span id="year"></span> Our Family Trips
+    </footer>
+  </main>
+
+  <!-- ===== JS：你的旅遊資料 + 自動渲染 ===== -->
   <script>
-    // ===== 旅遊資料：目前只保留未來行程 =====
-    // 即將出發的旅程（只有 3/6–3/13 日本之旅，日期不顯示年份）
+    // 只有你指定的這一趟行程，不顯示年份
     const upcomingTrips = [
       {
         name: "3/6–3/13 日本之旅",
         location: "日本 · 岡山・倉敷 ＆ 鳥取・米子",
-        date: "3/6 – 3/13", // 不顯示年份
+        date: "3/6 – 3/13",
         members: "全家",
         highlights: [
           "桃園 → 岡山機場",
@@ -13,109 +208,44 @@
           "3/9–3/13 鳥取・米子",
           "米子 → 桃園機場"
         ],
-        status: "行程已確認 · 倒數出發中",
-        link: "#"
+        status: "行程已確認 · 倒數出發中"
       }
     ];
 
-    // 過去旅程紀錄：目前不要任何資料 → 空陣列
-    const tripLog = [];
-
-    // ===== 以下是把資料渲染到畫面上 =====
     const upcomingContainer = document.getElementById("upcomingContainer");
-    const tripLogContainer = document.getElementById("tripLogContainer");
 
     function renderUpcoming() {
       upcomingContainer.innerHTML = "";
-      upcomingTrips.forEach(trip => {
-        const card = document.createElement("article");
-        card.className = "card";
-        card.innerHTML = `
-          <div class="card-header">
-            <div>
-              <div class="card-title">${trip.name}</div>
-              <div class="card-sub">${trip.location}</div>
-            </div>
-            <span class="chip">${trip.date}</span>
-          </div>
-          <div style="font-size:0.8rem; color:var(--muted); margin-top:0.25rem;">
-            成員：${trip.members}
-          </div>
-          <div class="tag-list">
-            ${trip.highlights.map(h => `<span class="tag">${h}</span>`).join("")}
-          </div>
-          <div class="card-footer">
-            <span>${trip.status}</span>
-            <span class="pill-link">
-              查看詳情
-            </span>
-          </div>
-        `;
-        upcomingContainer.appendChild(card);
-      });
+      const trip = upcomingTrips[0];
 
-      // 更新 Hero 顯示的下一趟旅程（取第一筆）
-      if (upcomingTrips.length > 0) {
-        const nextTrip = upcomingTrips[0];
-        document.getElementById("heroTripName").textContent = nextTrip.name;
-        document.getElementById("heroTripLocation").textContent = nextTrip.location;
-        document.getElementById("heroTripMeta").textContent =
-          `${nextTrip.date} · ${nextTrip.members} · ${nextTrip.highlights.join(" / ")}`;
-      }
-    }
+      const card = document.createElement("div");
+      card.className = "card";
+      card.innerHTML = `
+        <h3 style="font-size:1rem; font-weight:600;">${trip.name}</h3>
+        <div style="font-size:0.85rem; color:var(--muted);">${trip.location}</div>
+        <div style="margin-top:0.5rem;">成員：${trip.members}</div>
 
-    function renderTripLog() {
-      tripLogContainer.innerHTML = "";
+        <div style="margin-top:0.6rem;">
+          ${trip.highlights.map(h => `<span class="tag">${h}</span>`).join("")}
+        </div>
 
-      // 現在不顯示任何過去旅程，tripLog 是空陣列，這裡直接結束
-      if (tripLog.length === 0) {
-        return;
-      }
+        <div style="margin-top:0.8rem; font-size:0.85rem; color:var(--muted);">
+          ${trip.status}
+        </div>
+      `;
 
-      tripLog.forEach(trip => {
-        const card = document.createElement("article");
-        card.className = "trip-card";
-        card.innerHTML = `
-          <div class="trip-location">${trip.name}</div>
-          <div class="trip-meta">
-            <span>${trip.location}</span>
-            <span>·</span>
-            <span>${trip.date}</span>
-            <span>·</span>
-            <span>${trip.members}</span>
-          </div>
-          <p class="trip-desc">${trip.description}</p>
-          <div class="tag-list">
-            ${trip.tags.map(t => `<span class="tag">${t}</span>`).join("")}
-          </div>
-        `;
-        tripLogContainer.appendChild(card);
-      });
-    }
+      upcomingContainer.appendChild(card);
 
-    function updateStats() {
-      // 旅程總數 = 未來 + 過去（目前只有未來這一筆）
-      const totalTrips = tripLog.length + upcomingTrips.length;
-      document.getElementById("statTrips").textContent = totalTrips;
-
-      // 城市數量：從 location 抓出不同地點
-      const locations = tripLog.map(t => t.location).concat(upcomingTrips.map(t => t.location));
-      const cities = new Set(locations);
-      document.getElementById("statCities").textContent = cities.size || 1;
-    }
-
-    function scrollToSection(id) {
-      const el = document.getElementById(id);
-      if (!el) return;
-      window.scrollTo({
-        top: el.offsetTop - 70,
-        behavior: "smooth"
-      });
+      // Hero 區塊同步
+      document.getElementById("heroTripName").textContent = trip.name;
+      document.getElementById("heroTripMeta").textContent =
+        `${trip.date} · ${trip.members} · ${trip.highlights.join(" / ")}`;
     }
 
     document.getElementById("year").textContent = new Date().getFullYear();
 
     renderUpcoming();
-    renderTripLog();
-    updateStats();
   </script>
+
+</body>
+</html>
