@@ -868,72 +868,22 @@
   <script>
     // ===== 這裡是「旅遊資料」：你未來主要會修改的地方 =====
     // 即將出發的旅程
-    const upcomingTrips = [
-      {
-        name: "沖繩海島慢旅",
-        location: "日本 · 沖繩",
-        date: "2025/03/28 – 03/31",
-        members: "全家",
-        highlights: ["海邊散步", "自駕兜風", "在地拉麵"],
-        status: "機票已訂 · 找住宿中",
-        link: "#"
-      },
-      {
-        name: "京都賞楓小旅行",
-        location: "日本 · 京都",
-        date: "2025/11（規劃中）",
-        members: "爸爸 · 媽媽 · Kent",
-        highlights: ["清水寺", "嵐山", "和服體驗"],
-        status: "討論行程",
-        link: "#"
-      },
-      {
-        name: "花蓮三天兩夜",
-        location: "台灣 · 花蓮",
-        date: "暫定 2026 上半年",
-        members: "全家",
-        highlights: ["海岸公路", "太魯閣", "夜市美食"],
-        status: "想去，但尚未排假",
-        link: "#"
-      }
-    ];
-
-    // 過去旅程紀錄
-    const tripLog = [
-      {
-        name: "台南美食週末小旅行",
-        location: "台灣 · 台南",
-        date: "2024/10/19 – 10/20",
-        members: "全家",
-        tags: ["美食", "古城", "散步"],
-        description: "第一天完全被牛肉湯和小卷米粉收買，晚上在古蹟附近亂逛，走到腳痠也覺得值得。",
-      },
-      {
-        name: "清境農場兩天一夜",
-        location: "台灣 · 南投",
-        date: "2024/04/06 – 04/07",
-        members: "爸 · 媽 · Kent",
-        tags: ["山景", "放空", "星空"],
-        description: "早晚都很冷，但羊咩咩超可愛。晚上在民宿陽台看星星，聊天聊到很晚。",
-      },
-      {
-        name: "台東海岸公路自駕",
-        location: "台灣 · 台東",
-        date: "2023/08/10 – 08/13",
-        members: "全家",
-        tags: ["自駕", "海邊", "親子"],
-        description: "沿著海岸線開車，看到漂亮就停下來拍照，節奏完全照自己的步調走。",
-      },
-      {
-        name: "宜蘭溫泉放鬆之旅",
-        location: "台灣 · 宜蘭",
-        date: "2022/12/24 – 12/25",
-        members: "爸 · 媽",
-        tags: ["溫泉", "聖誕節", "放鬆"],
-        description: "沒有排太多行程，只是泡湯、吃東西、散步，單純享受放鬆的感覺。",
-      }
-    ];
-
+const upcomingTrips = [
+  {
+    name: "3/6–3/13 日本之旅",
+    location: "日本 · 岡山・倉敷 ＆ 鳥取・米子",
+    date: "2026/03/06 – 03/13",
+    members: "全家",
+    highlights: [
+      "桃園 → 岡山機場",
+      "3/6–3/9 岡山・倉敷",
+      "3/9–3/13 鳥取・米子",
+      "米子 → 桃園機場"
+    ],
+    status: "行程已確認 · 倒數出發中",
+    link: "#"
+  }
+];
     // ===== 以下是把資料渲染到畫面上 =====
     const upcomingContainer = document.getElementById("upcomingContainer");
     const tripLogContainer = document.getElementById("tripLogContainer");
