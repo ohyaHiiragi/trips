@@ -30,7 +30,7 @@
       background-attachment: fixed;
       color: var(--text-main);
       min-height: 100vh;
-      padding-bottom: 4rem;
+      padding-bottom: 5rem; /* 底部留白多一點，方便閱讀最後一天 */
     }
 
     .container {
@@ -40,7 +40,7 @@
       padding-top: 5rem; 
     }
 
-    /* ===== 懸浮 Logo 按鈕 ===== */
+    /* ===== 懸浮 Logo 按鈕 (置頂 + 回到頂部功能) ===== */
     .floating-brand-btn {
       position: fixed; top: 1.5rem; left: 50%; transform: translateX(-50%); z-index: 9999;
       display: flex; align-items: center; gap: 0.6rem;
@@ -67,7 +67,7 @@
     .flight-icon-circle { width: 40px; height: 40px; background: #e3f2fd; color: #2196f3; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
     .flight-label { font-size: 0.75rem; color: var(--text-muted); font-weight: 500; }
 
-    /* ===== Accordion List (手風琴列表) ===== */
+    /* ===== Accordion List (垂直手風琴) ===== */
     .itinerary-list {
       display: flex;
       flex-direction: column;
@@ -79,26 +79,24 @@
       border-radius: var(--radius);
       box-shadow: var(--glass-shadow);
       border: 1px solid rgba(255,255,255,0.8);
-      overflow: hidden; /* 重要：隱藏溢出的內容 */
+      overflow: hidden;
       transition: all 0.3s ease;
     }
 
-    /* 點擊展開後的樣式 */
     .accordion-item.open {
       background: rgba(255, 255, 255, 0.95);
       box-shadow: 0 15px 35px rgba(43, 103, 119, 0.15);
       border-color: var(--primary);
-      transform: scale(1.01); /* 微微放大凸顯 */
+      transform: scale(1.01);
     }
 
-    /* 按鈕頭部 */
     .accordion-header {
       padding: 1.2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
       cursor: pointer;
-      user-select: none;
+      user-select: none; /* 防止連點時選取到文字 */
     }
 
     .header-left { display: flex; flex-direction: column; gap: 0.2rem; }
@@ -112,23 +110,18 @@
       transition: transform 0.3s ease;
     }
     
-    /* 展開時箭頭旋轉 */
-    .accordion-item.open .header-icon {
-      transform: rotate(180deg);
-      color: var(--primary);
-    }
+    .accordion-item.open .header-icon { transform: rotate(180deg); color: var(--primary); }
 
-    /* 內容區塊 (預設隱藏) */
     .accordion-content {
       max-height: 0;
       opacity: 0;
       overflow: hidden;
       transition: max-height 0.4s ease, opacity 0.3s ease;
-      background: rgba(240, 245, 249, 0.3); /* 微微的區隔底色 */
+      background: rgba(240, 245, 249, 0.3);
     }
 
     .accordion-item.open .accordion-content {
-      max-height: 500px; /* 足夠放下內容的高度 */
+      max-height: 800px; /* 加大高度以容納較多行程 */
       opacity: 1;
     }
 
@@ -138,7 +131,6 @@
       padding-top: 1rem;
     }
 
-    /* 行程清單樣式 */
     .activity-item { display: flex; gap: 1rem; margin-bottom: 1rem; }
     .activity-item:last-child { margin-bottom: 0; }
     .act-icon { color: var(--primary); font-size: 1.3rem; min-width: 24px; }
@@ -158,7 +150,7 @@
   <div class="container">
     
     <div class="info-card">
-      <div class="trip-title">日本岡山 & 鳥取之旅</div>
+      <div class="trip-title">日本岡山 & 山陰之旅</div>
       <div class="trip-dates">2025/3/6 — 3/13 (8天)</div>
       <div class="flight-row">
         <div class="flight-item">
@@ -178,78 +170,141 @@
   </div>
 
   <script>
-    // ===== 資料區 =====
+    // ===== 完整的 8 天行程資料 =====
     const itineraryData = [
       {
         dayLabel: "Day 1",
         date: "3/6 (四)",
-        title: "出發 & 抵達岡山",
+        title: "啟程：前往晴天之國",
         activities: [
-          { icon: "ph-airplane-in-flight", text: "桃園機場起飛", note: "前往岡山桃太郎機場" },
-          { icon: "ph-bus", text: "機場巴士移動", note: "前往岡山車站" },
-          { icon: "ph-bed", text: "飯店 Check-in", note: "岡山站前" },
-          { icon: "ph-bowl-food", text: "晚餐：味司野村豬排丼", note: "岡山名物" }
+          { icon: "ph-airplane-in-flight", text: "桃園機場起飛", note: "虎航 IT214 (11:30)" },
+          { icon: "ph-bus", text: "抵達岡山 & 機場巴士", note: "約 15:05 抵達，移動至市區" },
+          { icon: "ph-bed", text: "飯店 Check-in", note: "岡山站前區域" },
+          { icon: "ph-bowl-food", text: "晚餐：岡山名物", note: "味司野村多蜜醬豬排丼" },
+          { icon: "ph-shopping-cart", text: "驚安殿堂・唐吉訶德", note: "第一波補貨 & 買水" }
         ]
       },
       {
         dayLabel: "Day 2",
         date: "3/7 (五)",
-        title: "倉敷美觀一日遊",
+        title: "倉敷美觀懷舊散策",
         activities: [
-          { icon: "ph-train", text: "搭乘電車前往倉敷", note: "" },
-          { icon: "ph-camera", text: "倉敷川遊船體體驗", note: "欣賞白壁建築" },
-          { icon: "ph-coffee", text: "下午茶時光", note: "有鄰庵幸福布丁" },
-          { icon: "ph-shopping-bag", text: "三井 Outlet 購物", note: "" }
+          { icon: "ph-train", text: "搭乘 JR 前往倉敷", note: "車程約 15 分鐘" },
+          { icon: "ph-camera", text: "倉敷川遊船", note: "體驗白壁建築與小橋流水" },
+          { icon: "ph-coffee", text: "下午茶：有鄰庵", note: "限量幸福布丁" },
+          { icon: "ph-storefront", text: "林源十郎商店 & 紙膠帶", note: "文青雜貨逛街" },
+          { icon: "ph-shopping-bag", text: "三井 Outlet Park 倉敷", note: "血拚購物行程" }
         ]
       },
       {
         dayLabel: "Day 3",
         date: "3/8 (六)",
-        title: "前進鳥取砂丘",
+        title: "移動日：前進鳥取砂丘",
         activities: [
-          { icon: "ph-train", text: "超級因幡號列車", note: "移動至鳥取" },
-          { icon: "ph-sun", text: "鳥取砂丘", note: "爬沙丘看海" },
-          { icon: "ph-image", text: "砂之美術館", note: "室內參觀" },
-          { icon: "ph-fire", text: "晚餐：鳥取和牛燒肉", note: "" }
+          { icon: "ph-train", text: "特急 Super Inaba", note: "前往鳥取站 (約 2 小時)" },
+          { icon: "ph-sun", text: "鳥取砂丘", note: "日本最大級砂丘，爬上馬背看海" },
+          { icon: "ph-image", text: "砂之美術館", note: "精緻的大型沙雕展" },
+          { icon: "ph-fire", text: "晚餐：鳥取和牛燒肉", note: "大快朵頤萬葉牛" }
+        ]
+      },
+      {
+        dayLabel: "Day 4",
+        date: "3/9 (日)",
+        title: "真相只有一個！柯南小鎮",
+        activities: [
+          { icon: "ph-train", text: "前往由良站 (柯南站)", note: "" },
+          { icon: "ph-person-simple-walk", text: "柯南大道散步", note: "沿途蒐集雕像與人孔蓋" },
+          { icon: "ph-book-open", text: "青山剛昌故鄉館", note: "解謎遊戲拿證書" },
+          { icon: "ph-coffee", text: "白羅咖啡廳", note: "米花商店街休息" },
+          { icon: "ph-train", text: "移動至米子/皆生溫泉", note: "晚上泡湯放鬆" }
+        ]
+      },
+      {
+        dayLabel: "Day 5",
+        date: "3/10 (一)",
+        title: "妖怪出沒：鬼太郎與松江",
+        activities: [
+          { icon: "ph-ghost", text: "境港水木茂大道", note: "尋找鬼太郎與眼球老爹" },
+          { icon: "ph-envelope", text: "妖怪神社 & 寄明信片", note: "五年後寄達的慢遞" },
+          { icon: "ph-train", text: "前往島根縣松江市", note: "" },
+          { icon: "ph-fort-wines", text: "松江城 & 堀川遊覽船", note: "國寶天守閣夕陽" }
+        ]
+      },
+      {
+        dayLabel: "Day 6",
+        date: "3/11 (二)",
+        title: "神話之國：出雲大社",
+        activities: [
+          { icon: "ph-train", text: "一畑電車前往出雲", note: "沿著宍道湖前進" },
+          { icon: "ph-torii", text: "出雲大社 參拜", note: "巨大注連繩，求結緣" },
+          { icon: "ph-coffee", text: "星巴克 出雲大社店", note: "和洋融合特色建築" },
+          { icon: "ph-train", text: "返回岡山", note: "搭乘特急 Yakumo (八雲號)" }
+        ]
+      },
+      {
+        dayLabel: "Day 7",
+        date: "3/12 (三)",
+        title: "岡山最後巡禮 & 購物",
+        activities: [
+          { icon: "ph-flower", text: "岡山後樂園", note: "日本三大名園散步" },
+          { icon: "ph-castle-turret", text: "岡山城 (烏城)", note: "外觀漆黑的帥氣城堡" },
+          { icon: "ph-shopping-cart", text: "Aeon Mall 岡山", note: "西日本最大級，最後大採購" },
+          { icon: "ph-beer-bottle", text: "居酒屋慶功宴", note: "慶祝旅程順利" }
         ]
       },
       {
         dayLabel: "Day 8",
         date: "3/13 (四)",
-        title: "滿載而歸",
+        title: "滿載而歸：回家囉",
         activities: [
-          { icon: "ph-gift", text: "最後採買伴手禮", note: "" },
-          { icon: "ph-airplane-landing", text: "飛抵溫暖的家", note: "桃園機場" }
+          { icon: "ph-coffee", text: "飯店早餐 & Check-out", note: "整理戰利品" },
+          { icon: "ph-bus", text: "前往岡山桃太郎機場", note: "" },
+          { icon: "ph-gift", text: "機場免稅店", note: "購買吉備糰子伴手禮" },
+          { icon: "ph-airplane-landing", text: "飛抵溫暖的家", note: "虎航 IT215 (15:55)" }
         ]
       }
     ];
 
-    // ===== 1. 綻放特效 =====
+    // ===== 1. 按鈕功能：綻放特效 + 回到頂部 =====
     const mainBtn = document.getElementById('mainBtn');
+    
     mainBtn.addEventListener('click', () => {
+      // (A) 捲動回頂部 (平滑效果)
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+
+      // (B) 綻放特效
       const rect = mainBtn.getBoundingClientRect();
+      // 確保特效是從按鈕當前位置炸開
       const x = (rect.left + rect.width / 2) / window.innerWidth;
       const y = (rect.top + rect.height / 2) / window.innerHeight;
+      
       confetti({
         origin: { x: x, y: y },
-        particleCount: 100, spread: 70, startVelocity: 30, gravity: 0.8,
+        particleCount: 120, 
+        spread: 80, 
+        startVelocity: 35, 
+        gravity: 0.8,
         colors: ['#ffb36b', '#2b6777', '#ff7675', '#74b9ff', '#55efc4'],
         disableForReducedMotion: true
       });
     });
 
-    // ===== 2. 渲染手風琴列表 =====
+    // ===== 2. 渲染手風琴行程表 =====
     const container = document.getElementById('accordionContainer');
 
     function renderAccordion() {
       container.innerHTML = "";
       
       itineraryData.forEach((item, index) => {
-        // 建立外層
         const card = document.createElement('div');
         card.className = 'accordion-item';
         
-        // 建立活動清單 HTML
+        // 為了讓第一個卡片預設是打開的，可以加上這行 (選用)
+        // if (index === 0) card.classList.add('open');
+        
         const activitiesHtml = item.activities.map(act => `
           <div class="activity-item">
             <i class="ph-fill ${act.icon} act-icon"></i>
@@ -260,7 +315,6 @@
           </div>
         `).join('');
 
-        // 填入內容
         card.innerHTML = `
           <div class="accordion-header">
             <div class="header-left">
@@ -276,16 +330,14 @@
           </div>
         `;
 
-        // 加入點擊事件 (開關邏輯)
-        const header = card.querySelector('.accordion-header');
-        header.addEventListener('click', () => {
-          // 邏輯選擇：
-          // 如果你希望「點開一個，自動關閉其他」，請保留下面這三行：
-          // document.querySelectorAll('.accordion-item').forEach(c => {
-          //   if (c !== card) c.classList.remove('open');
-          // });
-
-          // 切換當前卡片的狀態
+        // 點擊事件：切換開關
+        card.querySelector('.accordion-header').addEventListener('click', () => {
+          // 如果希望點一個就關閉其他，請把下面這段註解拿掉
+          /*
+          document.querySelectorAll('.accordion-item').forEach(c => {
+            if (c !== card) c.classList.remove('open');
+          });
+          */
           card.classList.toggle('open');
         });
 
