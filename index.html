@@ -17,136 +17,133 @@
       --text-main: #2d3436;
       --text-muted: #636e72;
       --glass-bg: rgba(255, 255, 255, 0.85); 
-      --glass-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-      --radius: 20px;
+      --glass-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      --radius: 16px;
     }
 
     * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
     
     body {
-      margin: 0;
-      padding: 0;
+      margin: 0; padding: 0;
       font-family: "Noto Sans TC", sans-serif;
       background: var(--bg-gradient);
       background-attachment: fixed;
       color: var(--text-main);
       min-height: 100vh;
-      padding-bottom: 3rem;
+      padding-bottom: 4rem;
     }
 
     .container {
       max-width: 600px;
       margin: 0 auto;
       padding: 1.2rem;
-      padding-top: 5rem; /* 保留頂部空間給懸浮的 Our Trips 按鈕 */
+      padding-top: 5rem; 
     }
 
-    /* ===== 懸浮 Logo 按鈕 (維持不變：永遠置頂) ===== */
+    /* ===== 懸浮 Logo 按鈕 ===== */
     .floating-brand-btn {
-      position: fixed; /* 固定在視窗上 */
-      top: 1.5rem;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 9999;
-      
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      
-      background: var(--glass-bg);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.8);
-      padding: 0.6rem 1.4rem;
-      border-radius: 50px;
-      box-shadow: var(--glass-shadow);
-      
-      border: none;
-      cursor: pointer;
-      font-family: inherit;
-      transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: fixed; top: 1.5rem; left: 50%; transform: translateX(-50%); z-index: 9999;
+      display: flex; align-items: center; gap: 0.6rem;
+      background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(12px);
+      padding: 0.6rem 1.4rem; border-radius: 50px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15); border: 1px solid rgba(255,255,255,1);
+      cursor: pointer; transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
-
-    .floating-brand-btn:active {
-      transform: translateX(-50%) scale(0.92);
-    }
-
+    .floating-brand-btn:active { transform: translateX(-50%) scale(0.92); }
     .brand-icon { font-size: 1.4rem; color: var(--primary); }
-    .brand-text { font-size: 1rem; font-weight: 700; letter-spacing: 0.05em; color: var(--primary); white-space: nowrap; }
+    .brand-text { font-size: 1rem; font-weight: 700; color: var(--primary); white-space: nowrap; }
 
     /* ===== Info Card ===== */
     .info-card {
-      background: rgba(255, 255, 255, 0.65);
-      backdrop-filter: blur(10px);
-      border-radius: var(--radius);
-      padding: 1.5rem;
-      margin-bottom: 2rem;
-      text-align: center;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.05);
-      border: 1px solid rgba(255,255,255,0.5);
+      background: rgba(255, 255, 255, 0.65); backdrop-filter: blur(10px);
+      border-radius: var(--radius); padding: 1.5rem; margin-bottom: 2rem;
+      text-align: center; box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+      border: 1px solid rgba(255,255,255,0.6);
     }
-
     .trip-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--primary); }
     .trip-dates { font-size: 0.9rem; color: var(--text-muted); background: rgba(0,0,0,0.03); padding: 4px 12px; border-radius: 12px; display: inline-block; }
-
-    .flight-row {
-      display: flex; justify-content: center; gap: 2rem; margin-top: 1rem; padding-top: 1rem;
-      border-top: 1px dashed rgba(0,0,0,0.1);
-    }
+    .flight-row { display: flex; justify-content: center; gap: 2rem; margin-top: 1rem; padding-top: 1rem; border-top: 1px dashed rgba(0,0,0,0.1); }
     .flight-item { display: flex; flex-direction: column; align-items: center; gap: 0.3rem; }
-    .flight-icon-circle {
-      width: 40px; height: 40px; background: #e3f2fd; color: #2196f3;
-      border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem;
-    }
+    .flight-icon-circle { width: 40px; height: 40px; background: #e3f2fd; color: #2196f3; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
     .flight-label { font-size: 0.75rem; color: var(--text-muted); font-weight: 500; }
 
-    /* ===== Day Selector (修改處：不再置頂) ===== */
-    .day-tabs-container {
-      margin-bottom: 1.5rem;
-      /* position: sticky;  <-- 已移除 */
-      /* top: 5rem;         <-- 已移除 */
-      /* z-index: 10;       <-- 已移除 */
-      position: relative; /* 改回預設相對定位 */
+    /* ===== Accordion List (手風琴列表) ===== */
+    .itinerary-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
     }
 
-    .day-tabs {
-      display: flex; gap: 0.8rem; overflow-x: auto; padding: 0.5rem 0.2rem;
-      scrollbar-width: none;
-    }
-    .day-tabs::-webkit-scrollbar { display: none; }
-
-    .day-btn {
-      flex: 0 0 auto; border: none; background: rgba(255, 255, 255, 0.5);
-      backdrop-filter: blur(5px); padding: 0.7rem 1.2rem; border-radius: 16px;
-      font-size: 0.95rem; font-weight: 600; color: var(--text-muted);
-      cursor: pointer; transition: all 0.2s ease;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    }
-    .day-btn.active {
-      background: var(--primary); color: white;
-      box-shadow: 0 4px 12px rgba(43, 103, 119, 0.4); transform: scale(1.05);
+    .accordion-item {
+      background: var(--glass-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--glass-shadow);
+      border: 1px solid rgba(255,255,255,0.8);
+      overflow: hidden; /* 重要：隱藏溢出的內容 */
+      transition: all 0.3s ease;
     }
 
-    /* ===== Itinerary Content ===== */
-    .schedule-display { min-height: 200px; }
-    .fade-in { animation: fadeUp 0.4s ease forwards; }
-    @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-    .day-card {
-      background: rgba(255, 255, 255, 0.75); backdrop-filter: blur(12px);
-      border-radius: var(--radius); padding: 1.5rem;
-      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.8);
+    /* 點擊展開後的樣式 */
+    .accordion-item.open {
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 15px 35px rgba(43, 103, 119, 0.15);
+      border-color: var(--primary);
+      transform: scale(1.01); /* 微微放大凸顯 */
     }
-    .day-header { margin-bottom: 1.2rem; padding-bottom: 0.8rem; border-bottom: 1px solid rgba(0,0,0,0.06); }
-    .day-header h2 { margin: 0; font-size: 1.2rem; color: var(--primary); }
-    .day-header span { font-size: 0.85rem; color: var(--text-muted); }
+
+    /* 按鈕頭部 */
+    .accordion-header {
+      padding: 1.2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .header-left { display: flex; flex-direction: column; gap: 0.2rem; }
+    .header-day { font-size: 0.8rem; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; }
+    .header-title { font-size: 1.1rem; font-weight: 700; color: var(--text-main); }
+    .header-date { font-size: 0.85rem; color: var(--text-muted); margin-left: 0.5rem; font-weight: 400; }
+
+    .header-icon {
+      font-size: 1.2rem;
+      color: #b2bec3;
+      transition: transform 0.3s ease;
+    }
     
-    .activity-list { list-style: none; padding: 0; margin: 0; }
-    .activity-item { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.2rem; }
-    .act-icon { color: var(--accent); font-size: 1.4rem; margin-top: -2px; }
-    .act-text { font-size: 1rem; font-weight: 500; color: #333; line-height: 1.4; }
-    .act-note { font-size: 0.8rem; color: #888; margin-top: 0.2rem; }
+    /* 展開時箭頭旋轉 */
+    .accordion-item.open .header-icon {
+      transform: rotate(180deg);
+      color: var(--primary);
+    }
+
+    /* 內容區塊 (預設隱藏) */
+    .accordion-content {
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, opacity 0.3s ease;
+      background: rgba(240, 245, 249, 0.3); /* 微微的區隔底色 */
+    }
+
+    .accordion-item.open .accordion-content {
+      max-height: 500px; /* 足夠放下內容的高度 */
+      opacity: 1;
+    }
+
+    .content-inner {
+      padding: 0 1.5rem 1.5rem 1.5rem;
+      border-top: 1px dashed rgba(0,0,0,0.05);
+      padding-top: 1rem;
+    }
+
+    /* 行程清單樣式 */
+    .activity-item { display: flex; gap: 1rem; margin-bottom: 1rem; }
+    .activity-item:last-child { margin-bottom: 0; }
+    .act-icon { color: var(--primary); font-size: 1.3rem; min-width: 24px; }
+    .act-text { font-size: 0.95rem; font-weight: 500; color: #333; line-height: 1.5; }
+    .act-note { font-size: 0.8rem; color: #888; margin-top: 0.1rem; }
 
     footer { text-align: center; margin-top: 3rem; font-size: 0.75rem; color: #888; opacity: 0.7; }
   </style>
@@ -163,34 +160,25 @@
     <div class="info-card">
       <div class="trip-title">日本岡山 & 鳥取之旅</div>
       <div class="trip-dates">2025/3/6 — 3/13 (8天)</div>
-      
       <div class="flight-row">
         <div class="flight-item">
-          <div class="flight-icon-circle">
-            <i class="ph-fill ph-airplane-takeoff"></i>
-          </div>
+          <div class="flight-icon-circle"><i class="ph-fill ph-airplane-takeoff"></i></div>
           <span class="flight-label">去程</span>
         </div>
         <div class="flight-item">
-          <div class="flight-icon-circle" style="background:#fff3e0; color:#ff9800;">
-            <i class="ph-fill ph-airplane-landing"></i>
-          </div>
+          <div class="flight-icon-circle" style="background:#fff3e0; color:#ff9800;"><i class="ph-fill ph-airplane-landing"></i></div>
           <span class="flight-label">回程</span>
         </div>
       </div>
     </div>
 
-    <div class="day-tabs-container">
-      <div class="day-tabs" id="dayTabs"></div>
-    </div>
-
-    <div id="scheduleDisplay" class="schedule-display"></div>
+    <div class="itinerary-list" id="accordionContainer"></div>
 
     <footer>🔒 詳細訂位資訊請見 Line 記事本</footer>
   </div>
 
   <script>
-    // ===== 行程資料 =====
+    // ===== 資料區 =====
     const itineraryData = [
       {
         dayLabel: "Day 1",
@@ -236,77 +224,76 @@
       }
     ];
 
-    // ===== 1. 綻放特效邏輯 (Confetti) =====
+    // ===== 1. 綻放特效 =====
     const mainBtn = document.getElementById('mainBtn');
-    
-    mainBtn.addEventListener('click', (event) => {
+    mainBtn.addEventListener('click', () => {
       const rect = mainBtn.getBoundingClientRect();
       const x = (rect.left + rect.width / 2) / window.innerWidth;
       const y = (rect.top + rect.height / 2) / window.innerHeight;
-
       confetti({
         origin: { x: x, y: y },
-        particleCount: 100,
-        spread: 70,
-        startVelocity: 30,
-        gravity: 0.8,
+        particleCount: 100, spread: 70, startVelocity: 30, gravity: 0.8,
         colors: ['#ffb36b', '#2b6777', '#ff7675', '#74b9ff', '#55efc4'],
         disableForReducedMotion: true
       });
     });
 
-    // ===== 2. 行程表邏輯 =====
-    const dayTabsContainer = document.getElementById('dayTabs');
-    const scheduleDisplay = document.getElementById('scheduleDisplay');
+    // ===== 2. 渲染手風琴列表 =====
+    const container = document.getElementById('accordionContainer');
 
-    function init() {
-      renderTabs();
-      renderDayContent(0);
-    }
+    function renderAccordion() {
+      container.innerHTML = "";
+      
+      itineraryData.forEach((item, index) => {
+        // 建立外層
+        const card = document.createElement('div');
+        card.className = 'accordion-item';
+        
+        // 建立活動清單 HTML
+        const activitiesHtml = item.activities.map(act => `
+          <div class="activity-item">
+            <i class="ph-fill ${act.icon} act-icon"></i>
+            <div>
+              <div class="act-text">${act.text}</div>
+              ${act.note ? `<div class="act-note">${act.note}</div>` : ''}
+            </div>
+          </div>
+        `).join('');
 
-    function renderTabs() {
-      dayTabsContainer.innerHTML = "";
-      itineraryData.forEach((day, index) => {
-        const btn = document.createElement('button');
-        btn.className = `day-btn ${index === 0 ? 'active' : ''}`;
-        btn.innerText = day.dayLabel;
-        btn.onclick = () => {
-          document.querySelectorAll('.day-btn').forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          renderDayContent(index);
-          btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-        };
-        dayTabsContainer.appendChild(btn);
+        // 填入內容
+        card.innerHTML = `
+          <div class="accordion-header">
+            <div class="header-left">
+              <div class="header-day">${item.dayLabel}</div>
+              <div class="header-title">${item.title} <span class="header-date">${item.date}</span></div>
+            </div>
+            <i class="ph-bold ph-caret-down header-icon"></i>
+          </div>
+          <div class="accordion-content">
+            <div class="content-inner">
+              ${activitiesHtml}
+            </div>
+          </div>
+        `;
+
+        // 加入點擊事件 (開關邏輯)
+        const header = card.querySelector('.accordion-header');
+        header.addEventListener('click', () => {
+          // 邏輯選擇：
+          // 如果你希望「點開一個，自動關閉其他」，請保留下面這三行：
+          // document.querySelectorAll('.accordion-item').forEach(c => {
+          //   if (c !== card) c.classList.remove('open');
+          // });
+
+          // 切換當前卡片的狀態
+          card.classList.toggle('open');
+        });
+
+        container.appendChild(card);
       });
     }
 
-    function renderDayContent(index) {
-      const data = itineraryData[index];
-      const activitiesHtml = data.activities.map(act => `
-        <li class="activity-item">
-          <i class="ph-fill ${act.icon} act-icon"></i>
-          <div>
-            <div class="act-text">${act.text}</div>
-            ${act.note ? `<div class="act-note">${act.note}</div>` : ''}
-          </div>
-        </li>
-      `).join('');
-
-      const html = `
-        <div class="day-card fade-in">
-          <div class="day-header">
-            <h2>${data.dayLabel} · ${data.title}</h2>
-            <span>${data.date}</span>
-          </div>
-          <ul class="activity-list">
-            ${activitiesHtml}
-          </ul>
-        </div>
-      `;
-      scheduleDisplay.innerHTML = html;
-    }
-
-    init();
+    renderAccordion();
   </script>
 </body>
 </html>
