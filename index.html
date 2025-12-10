@@ -16,7 +16,7 @@
       --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
       --text-main: #2d3436;
       --text-muted: #636e72;
-      --glass-bg: rgba(255, 255, 255, 0.85); /* 稍微不透明一點，防止與背景字重疊 */
+      --glass-bg: rgba(255, 255, 255, 0.85); 
       --glass-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
       --radius: 20px;
     }
@@ -38,57 +38,43 @@
       max-width: 600px;
       margin: 0 auto;
       padding: 1.2rem;
-      padding-top: 5rem; /* 重要！因為按鈕懸浮了，內容要往下推，不然會被擋住 */
+      padding-top: 5rem; /* 保留頂部空間給懸浮的 Our Trips 按鈕 */
     }
 
-    /* ===== 修改重點：懸浮 Logo 按鈕 ===== */
+    /* ===== 懸浮 Logo 按鈕 (維持不變：永遠置頂) ===== */
     .floating-brand-btn {
-      position: fixed; /* 固定在螢幕上 */
-      top: 1.5rem;     /* 距離頂部 */
+      position: fixed; /* 固定在視窗上 */
+      top: 1.5rem;
       left: 50%;
-      transform: translateX(-50%); /* 絕對置中 */
-      z-index: 9999;   /* 確保在最上層 */
+      transform: translateX(-50%);
+      z-index: 9999;
       
       display: flex;
       align-items: center;
       gap: 0.6rem;
       
-      /* 按鈕樣式 */
       background: var(--glass-bg);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border: 1px solid rgba(255, 255, 255, 0.8);
       padding: 0.6rem 1.4rem;
-      border-radius: 50px; /* 膠囊形狀 */
+      border-radius: 50px;
       box-shadow: var(--glass-shadow);
       
-      /* 文字與互動 */
       border: none;
       cursor: pointer;
       font-family: inherit;
-      transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* 彈跳感動畫 */
+      transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
-    /* 按下去的縮小效果 */
     .floating-brand-btn:active {
       transform: translateX(-50%) scale(0.92);
     }
 
-    /* 圖示與文字樣式 */
-    .brand-icon {
-      font-size: 1.4rem;
-      color: var(--primary);
-    }
+    .brand-icon { font-size: 1.4rem; color: var(--primary); }
+    .brand-text { font-size: 1rem; font-weight: 700; letter-spacing: 0.05em; color: var(--primary); white-space: nowrap; }
 
-    .brand-text {
-      font-size: 1rem;
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      color: var(--primary);
-      white-space: nowrap;
-    }
-
-    /* ===== Flight / Info Card ===== */
+    /* ===== Info Card ===== */
     .info-card {
       background: rgba(255, 255, 255, 0.65);
       backdrop-filter: blur(10px);
@@ -114,12 +100,13 @@
     }
     .flight-label { font-size: 0.75rem; color: var(--text-muted); font-weight: 500; }
 
-    /* ===== Day Selector ===== */
+    /* ===== Day Selector (修改處：不再置頂) ===== */
     .day-tabs-container {
       margin-bottom: 1.5rem;
-      position: sticky;
-      top: 5rem; /* 配合懸浮按鈕的高度調整 */
-      z-index: 10;
+      /* position: sticky;  <-- 已移除 */
+      /* top: 5rem;         <-- 已移除 */
+      /* z-index: 10;       <-- 已移除 */
+      position: relative; /* 改回預設相對定位 */
     }
 
     .day-tabs {
@@ -253,19 +240,17 @@
     const mainBtn = document.getElementById('mainBtn');
     
     mainBtn.addEventListener('click', (event) => {
-      // 獲取按鈕在螢幕上的位置，讓彩帶從按鈕中心炸出來
       const rect = mainBtn.getBoundingClientRect();
       const x = (rect.left + rect.width / 2) / window.innerWidth;
       const y = (rect.top + rect.height / 2) / window.innerHeight;
 
-      // 發射七彩紙花
       confetti({
-        origin: { x: x, y: y }, // 發射原點
-        particleCount: 100,     // 粒子數量
-        spread: 70,             // 擴散角度
-        startVelocity: 30,      // 噴射速度
+        origin: { x: x, y: y },
+        particleCount: 100,
+        spread: 70,
+        startVelocity: 30,
         gravity: 0.8,
-        colors: ['#ffb36b', '#2b6777', '#ff7675', '#74b9ff', '#55efc4'], // 自定義配色
+        colors: ['#ffb36b', '#2b6777', '#ff7675', '#74b9ff', '#55efc4'],
         disableForReducedMotion: true
       });
     });
