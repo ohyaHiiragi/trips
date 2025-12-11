@@ -1,4 +1,15 @@
-<style>
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <title>Our Trips | 旅程隨身記</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+  
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <style>
     :root {
       --primary: #2b6777;
       --primary-dark: #1a404a;
@@ -209,3 +220,187 @@
 
     footer { text-align: center; margin-top: 3rem; font-size: 0.8rem; color: var(--text-muted); opacity: 0.9; line-height: 1.8; }
   </style>
+</head>
+<body>
+
+  <button id="mainBtn" class="floating-brand-btn">
+    <i class="ph-fill ph-suitcase-rolling brand-icon"></i>
+    <span class="brand-text">OUR TRIPS</span>
+  </button>
+
+  <div class="container">
+    
+    <div class="info-card">
+      <div class="trip-title">日本岡山 & 山陰之旅</div>
+      <div class="trip-dates">2025/3/6 — 3/13 (8天)</div>
+      
+      <div class="flight-row">
+        <button class="flight-btn" id="depBtn">
+          <div class="flight-icon-circle"><i class="ph-fill ph-airplane-tilt" id="depIcon"></i></div>
+          <span class="flight-label">去程</span>
+        </button>
+        <button class="flight-btn" id="retBtn">
+          <div class="flight-icon-circle"><i class="ph-fill ph-airplane-tilt" id="retIcon" style="transform: scaleX(-1);"></i></div>
+          <span class="flight-label">回程</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="itinerary-list" id="accordionContainer"></div>
+
+    <footer>
+      <div style="margin-bottom:0.3rem">
+        <i class="ph-fill ph-notebook" style="vertical-align:middle; font-size:1.1rem; margin-right:4px;"></i> 
+        詳細訂位資訊請見 Line 記事本
+      </div>
+      <div style="color:var(--primary); font-weight:500;">
+        <i class="ph-fill ph-sparkle" style="vertical-align:middle; font-size:1.1rem; margin-right:4px; color:var(--accent);"></i>
+        盡情享受這悠閒的旅程吧
+      </div>
+    </footer>
+
+  </div>
+
+  <div class="ticket-overlay" id="ticketModal">
+    <div>
+      <div class="ticket-card">
+        <div class="ticket-header" id="ticketHeader">
+          <i class="ph-fill ph-airplane-tilt ticket-plane-icon"></i>
+          <h2 style="color:white; font-size:1.2rem; letter-spacing:2px;">BOARDING PASS</h2>
+        </div>
+        <div class="ticket-body">
+          <div class="ticket-dash"></div>
+          <div class="route-display">
+            <span class="airport-code" id="codeFrom">TPE</span>
+            <i class="ph-bold ph-airplane-in-flight route-arrow"></i>
+            <span class="airport-code" id="codeTo">OKJ</span>
+          </div>
+          <div class="city-name"><span id="cityFrom">Taipei</span><span id="cityTo">Okayama</span></div>
+          <div class="ticket-info-row">
+            <div><div class="info-label">DATE</div><div class="info-value" id="ticketDate">MAR 06</div></div>
+            <div style="text-align:right;"><div class="info-label">FLIGHT</div><div class="info-value" id="ticketFlight">IT 214</div></div>
+          </div>
+          <div class="barcode"></div>
+        </div>
+      </div>
+      <div class="close-hint">點擊任意處關閉</div>
+    </div>
+  </div>
+
+  <script>
+    // ===== 行程資料 =====
+    const itineraryData = [
+      { dayLabel: "DAY 1", date: "3/6 (四)", title: "啟程：前往晴天之國", activities: [ { icon: "ph-airplane-in-flight", text: "桃園機場起飛", note: "虎航 IT214 (11:30)" }, { icon: "ph-bus", text: "抵達岡山 & 機場巴士", note: "約 15:05 抵達，移動至市區" }, { icon: "ph-bed", text: "飯店 Check-in", note: "岡山站前區域" }, { icon: "ph-bowl-food", text: "晚餐：岡山名物", note: "味司野村多蜜醬豬排丼" }, { icon: "ph-shopping-cart", text: "驚安殿堂・唐吉訶德", note: "第一波補貨 & 買水" } ] },
+      { dayLabel: "DAY 2", date: "3/7 (五)", title: "倉敷美觀懷舊散策", activities: [ { icon: "ph-train", text: "搭乘 JR 前往倉敷", note: "車程約 15 分鐘" }, { icon: "ph-camera", text: "倉敷川遊船", note: "體驗白壁建築與小橋流水" }, { icon: "ph-coffee", text: "下午茶：有鄰庵", note: "限量幸福布丁" }, { icon: "ph-storefront", text: "林源十郎商店 & 紙膠帶", note: "文青雜貨逛街" }, { icon: "ph-shopping-bag", text: "三井 Outlet Park 倉敷", note: "血拚購物行程" } ] },
+      { dayLabel: "DAY 3", date: "3/8 (六)", title: "移動日：前進鳥取砂丘", activities: [ { icon: "ph-train", text: "特急 Super Inaba", note: "前往鳥取站 (約 2 小時)" }, { icon: "ph-sun", text: "鳥取砂丘", note: "日本最大級砂丘，爬上馬背看海" }, { icon: "ph-image", text: "砂之美術館", note: "精緻的大型沙雕展" }, { icon: "ph-fire", text: "晚餐：鳥取和牛燒肉", note: "大快朵頤萬葉牛" } ] },
+      { dayLabel: "DAY 4", date: "3/9 (日)", title: "真相只有一個！柯南小鎮", activities: [ { icon: "ph-train", text: "前往由良站 (柯南站)", note: "" }, { icon: "ph-person-simple-walk", text: "柯南大道散步", note: "沿途蒐集雕像與人孔蓋" }, { icon: "ph-book-open", text: "青山剛昌故鄉館", note: "解謎遊戲拿證書" }, { icon: "ph-coffee", text: "白羅咖啡廳", note: "米花商店街休息" }, { icon: "ph-train", text: "移動至米子/皆生溫泉", note: "晚上泡湯放鬆" } ] },
+      { dayLabel: "DAY 5", date: "3/10 (一)", title: "妖怪出沒：鬼太郎與松江", activities: [ { icon: "ph-ghost", text: "境港水木茂大道", note: "尋找鬼太郎與眼球老爹" }, { icon: "ph-envelope", text: "妖怪神社 & 寄明信片", note: "五年後寄達的慢遞" }, { icon: "ph-train", text: "前往島根縣松江市", note: "" }, { icon: "ph-fort-wines", text: "松江城 & 堀川遊覽船", note: "國寶天守閣夕陽" } ] },
+      { dayLabel: "DAY 6", date: "3/11 (二)", title: "神話之國：出雲大社", activities: [ { icon: "ph-train", text: "一畑電車前往出雲", note: "沿著宍道湖前進" }, { icon: "ph-torii", text: "出雲大社 參拜", note: "巨大注連繩，求結緣" }, { icon: "ph-coffee", text: "星巴克 出雲大社店", note: "和洋融合特色建築" }, { icon: "ph-train", text: "返回岡山", note: "搭乘特急 Yakumo (八雲號)" } ] },
+      { dayLabel: "DAY 7", date: "3/12 (三)", title: "岡山最後巡禮 & 購物", activities: [ { icon: "ph-flower", text: "岡山後樂園", note: "日本三大名園散步" }, { icon: "ph-castle-turret", text: "岡山城 (烏城)", note: "外觀漆黑的帥氣城堡" }, { icon: "ph-shopping-cart", text: "Aeon Mall 岡山", note: "西日本最大級，最後大採購" }, { icon: "ph-beer-bottle", text: "居酒屋慶功宴", note: "慶祝旅程順利" } ] },
+      { dayLabel: "DAY 8", date: "3/13 (四)", title: "滿載而歸：回家囉", activities: [ { icon: "ph-coffee", text: "飯店早餐 & Check-out", note: "整理戰利品" }, { icon: "ph-bus", text: "前往岡山桃太郎機場", note: "" }, { icon: "ph-gift", text: "機場免稅店", note: "購買吉備糰子伴手禮" }, { icon: "ph-airplane-landing", text: "飛抵溫暖的家", note: "虎航 IT215 (15:55)" } ] }
+    ];
+
+    // ===== 程式邏輯 (保持不變) =====
+    const depBtn = document.getElementById('depBtn');
+    const retBtn = document.getElementById('retBtn');
+    const depIcon = document.getElementById('depIcon');
+    const retIcon = document.getElementById('retIcon');
+    const ticketModal = document.getElementById('ticketModal');
+    const ticketHeader = document.getElementById('ticketHeader');
+    const codeFrom = document.getElementById('codeFrom');
+    const codeTo = document.getElementById('codeTo');
+    const cityFrom = document.getElementById('cityFrom');
+    const cityTo = document.getElementById('cityTo');
+    const ticketDate = document.getElementById('ticketDate');
+    const ticketFlight = document.getElementById('ticketFlight');
+
+    function showTicket(type) {
+      if (type === 'dep') {
+        ticketHeader.classList.remove('return-trip');
+        codeFrom.innerText = "TPE"; cityFrom.innerText = "Taipei";
+        codeTo.innerText = "OKJ";   cityTo.innerText = "Okayama";
+        ticketDate.innerText = "MAR 06"; ticketFlight.innerText = "IT 214";
+      } else {
+        ticketHeader.classList.add('return-trip');
+        codeFrom.innerText = "OKJ"; cityFrom.innerText = "Okayama"; 
+        codeTo.innerText = "TPE";   cityTo.innerText = "Taipei";
+        ticketDate.innerText = "MAR 13"; ticketFlight.innerText = "IT 215";
+      }
+      ticketModal.classList.add('show');
+    }
+
+    depBtn.addEventListener('click', () => {
+      depIcon.classList.add('anim-fly-out');
+      setTimeout(() => { showTicket('dep'); }, 400); 
+      setTimeout(() => { depIcon.classList.remove('anim-fly-out'); }, 1000);
+    });
+
+    retBtn.addEventListener('click', () => {
+      retIcon.classList.add('anim-fly-back');
+      setTimeout(() => { showTicket('ret'); }, 400); 
+      setTimeout(() => { retIcon.classList.remove('anim-fly-back'); }, 1000);
+    });
+
+    ticketModal.addEventListener('click', () => { ticketModal.classList.remove('show'); });
+
+    const mainBtn = document.getElementById('mainBtn');
+    mainBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      const rect = mainBtn.getBoundingClientRect();
+      const x = (rect.left + rect.width / 2) / window.innerWidth;
+      const y = (rect.top + rect.height / 2) / window.innerHeight;
+      confetti({
+        origin: { x: x, y: y },
+        particleCount: 120, spread: 80, startVelocity: 35, gravity: 0.8,
+        colors: ['#ffb36b', '#2b6777', '#ff7675', '#74b9ff', '#55efc4'],
+        disableForReducedMotion: true
+      });
+    });
+
+    const container = document.getElementById('accordionContainer');
+    function renderAccordion() {
+      container.innerHTML = "";
+      itineraryData.forEach((item, index) => {
+        const card = document.createElement('div');
+        card.className = 'accordion-item';
+        const activitiesHtml = item.activities.map(act => `
+          <div class="activity-item">
+            <i class="ph-fill ${act.icon} act-icon"></i>
+            <div>
+              <div class="act-text">${act.text}</div>
+              ${act.note ? `<div class="act-note">${act.note}</div>` : ''}
+            </div>
+          </div>
+        `).join('');
+        
+        // 更新後的 HTML 結構：Day 標籤(左) + 資訊(中) + Icon(右)
+        card.innerHTML = `
+          <div class="accordion-header">
+            <div class="header-day-label">${item.dayLabel}</div>
+            
+            <div class="header-info-center">
+              <div class="header-date-top">${item.date}</div>
+              <div class="header-title-main">${item.title}</div>
+            </div>
+
+            <div class="header-icon-right">
+              <i class="ph-bold ph-caret-down header-icon"></i>
+            </div>
+          </div>
+          
+          <div class="accordion-content">
+            <div class="content-inner">
+              ${activitiesHtml}
+            </div>
+          </div>
+        `;
+        card.querySelector('.accordion-header').addEventListener('click', () => {
+          card.classList.toggle('open');
+        });
+        container.appendChild(card);
+      });
+    }
+    renderAccordion();
+  </script>
+</body>
+</html>
