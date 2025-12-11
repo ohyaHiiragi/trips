@@ -19,6 +19,28 @@
       --text-muted: #636e72;
       --glass-bg: rgba(255, 255, 255, 0.85); 
       --radius: 16px;
+      /* ... 原本的 CSS ... */
+
+    /* 新增：可點擊的行程項目樣式 */
+    a.activity-item {
+      text-decoration: none; /* 移除底線 */
+      cursor: pointer;       /* 滑鼠變手指 */
+      transition: background 0.2s, transform 0.1s;
+      display: flex;         /* 保持原本的排版 */
+      border-radius: 12px;   /* 圓角 */
+      padding: 0.5rem;       /* 增加一點點內距讓點擊範圍變大 */
+      margin: 0 -0.5rem 1rem -0.5rem; /* 修正因為加了 padding 導致的位移 */
+    }
+
+    /* 滑鼠移過去的效果 (Hover) */
+    a.activity-item:hover {
+      background: rgba(255, 255, 255, 0.6); /* 微微變白 */
+    }
+
+    /* 點擊下去的效果 (Active) */
+    a.activity-item:active {
+      transform: scale(0.98); /* 微微縮小，產生按鈕感 */
+      background: rgba(43, 103, 119, 0.1); /* 點擊時出現淡淡的主色背景 */
     }
 
     * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
