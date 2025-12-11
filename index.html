@@ -21,7 +21,7 @@
       --radius: 16px;
     }
 
-    /* 新增：可點擊的行程項目樣式 */
+    /* 可點擊行程樣式 */
     a.activity-item {
       text-decoration: none; cursor: pointer;
       transition: background 0.2s, transform 0.1s;
@@ -43,7 +43,7 @@
       position: relative;
     }
 
-    /* 固定背景優化 */
+    /* 固定背景 */
     body::before {
       content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: var(--bg-gradient); background-size: cover; z-index: -2; will-change: transform;
@@ -51,7 +51,7 @@
 
     .container { max-width: 600px; margin: 0 auto; padding: 1.2rem; padding-top: 5rem; }
 
-    /* 懸浮 Logo 按鈕 */
+    /* 懸浮 Logo */
     .floating-brand-btn {
       position: fixed; top: 1.5rem; left: 50%; transform: translateX(-50%); z-index: 999;
       display: flex; align-items: center; gap: 0.6rem;
@@ -97,7 +97,10 @@
     .ticket-header { height: 100px; background: linear-gradient(135deg, var(--primary) 0%, #52ab98 100%); position: relative; display: flex; align-items: center; justify-content: center; }
     .ticket-header.return-trip { background: linear-gradient(135deg, #ffb36b 0%, #ff7675 100%); }
     .ticket-plane-icon { font-size: 3rem; color: rgba(255,255,255,0.2); position: absolute; transition: transform 0.3s; }
+    
+    /* 修改 2：讓回程機票上的飛機圖示也向左飛 (scaleX(-1)) */
     .ticket-header.return-trip .ticket-plane-icon { transform: scaleX(-1); }
+
     .ticket-body { padding: 1.5rem; text-align: center; position: relative; }
     .ticket-dash { border-top: 2px dashed #e0e0e0; margin: 0 0 1.5rem 0; position: relative; }
     .route-display { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
@@ -114,22 +117,45 @@
     .itinerary-list { display: flex; flex-direction: column; gap: 1rem; }
     .accordion-item { background: var(--glass-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-radius: var(--radius); box-shadow: var(--glass-shadow); border: 1px solid rgba(255,255,255,0.8); overflow: hidden; transition: all 0.3s ease; transform: translateZ(0); }
     .accordion-item.open { background: rgba(255, 255, 255, 0.95); box-shadow: 0 15px 35px rgba(43, 103, 119, 0.15); border-color: var(--primary); transform: scale(1.01) translateZ(0); }
-    .accordion-header { display: flex; align-items: stretch; cursor: pointer; user-select: none; padding: 0; min-height: 85px; }
     
+    .accordion-header {
+      display: flex; align-items: stretch; cursor: pointer; user-select: none;
+      padding: 0; min-height: 90px; /* 稍微加高一點，讓大字體不擁擠 */
+    }
+
+    /* 左側直立 Day 標籤 */
     .header-day-label {
       background: var(--accent); color: white;
-      font-family: 'Oswald', sans-serif; font-weight: 700; letter-spacing: 2px;
+      font-family: 'Oswald', sans-serif; 
+      font-weight: 700; 
+      letter-spacing: 2px; /* 增加字距，讓直排更好看 */
       font-size: 0.9rem;
-      writing-mode: vertical-lr; text-orientation: upright; 
+      writing-mode: vertical-lr; /* 直排核心 */
+      text-orientation: upright; /* 字母保持直立 D A Y 1 */
       display: flex; align-items: center; justify-content: center;
       padding: 0.6rem; border-radius: var(--radius) 0 0 0; 
       transition: background 0.3s;
+      min-width: 45px; /* 確保有足夠寬度 */
     }
     
     .header-info-center { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 1rem 0.5rem; text-align: center; }
 
-    .header-date-top { font-size: 1rem; color: var(--accent); font-weight: 700; margin-bottom: 0.3rem; letter-spacing: 0.5px; }
-    .header-title-main { font-size: 1.1rem; font-weight: 700; color: var(--text-main); line-height: 1.3; }
+    /* 修改 4：日期字體加大到 1.05rem */
+    .header-date-top { 
+      font-size: 1.05rem; 
+      color: var(--accent); 
+      font-weight: 700; 
+      margin-bottom: 0.3rem; 
+      letter-spacing: 0.5px; 
+    }
+    
+    /* 修改 4：標題字體加大到 1.25rem，確保大於日期 */
+    .header-title-main { 
+      font-size: 1.25rem; 
+      font-weight: 700; 
+      color: var(--text-main); 
+      line-height: 1.3; 
+    }
 
     .header-icon-right { display: flex; align-items: center; padding-right: 1.2rem; padding-left: 0.5rem; }
     .header-icon { font-size: 1.2rem; color: #b2bec3; transition: transform 0.3s ease; }
@@ -177,7 +203,7 @@
     <footer>
       <div style="color:var(--primary); font-weight:500; display: flex; align-items: center; justify-content: center; gap: 8px;">
         <i class="ph-fill ph-camera" style="font-size:1.2rem; color:var(--accent);"></i>
-        <span>有些風景，只為此刻的我們停留</span>
+        <span>盡情享受這悠閒的旅程吧!</span>
         <i class="ph-fill ph-heart" style="font-size:1.2rem; color:var(--accent);"></i>
       </div>
     </footer>
@@ -213,7 +239,8 @@
   <script>
     // ===== 行程資料 =====
     const itineraryData = [
-      { dayLabel: "啟程", date: "3/6 (五)", title: "啟程：前往晴天之國", activities: [ 
+      // 修改 3：DayLabel 維持 "DAY 1"，但 Title 改成 "啟程：..."
+      { dayLabel: "DAY 1", date: "3/6 (五)", title: "啟程：前往晴天之國", activities: [ 
         { icon: "ph-airplane-in-flight", text: "桃園機場起飛", note: "虎航 IT214 (11:30)", mapUrl: "https://maps.app.goo.gl/mXssjK2tunhrF2zq8" }, 
         { icon: "ph-bus", text: "抵達岡山 & 機場巴士", note: "約 15:05 抵達，移動至市區" }, 
         { icon: "ph-bed", text: "飯店 Check-in", note: "岡山站前區域" }, 
